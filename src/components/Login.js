@@ -11,10 +11,12 @@ class Login extends Component {
   };
 
   checkUserExist = async () => {
+    // verification is not possible in backend using this to validate the user
     let flag = false;
     const response = await api.get("/users");
     for (let i of response.data) {
       if (i.user === this.state.user && i.password === this.state.password) {
+        localStorage.setItem("user", JSON.stringify(response.data));
         flag = true;
         return flag;
       }
@@ -22,7 +24,7 @@ class Login extends Component {
     alert("check your user and password");
   };
 
-  addUser = async (e) => {
+  userLogin = async (e) => {
     e.preventDefault();
     if (!this.state.user || !this.state.password) {
       alert("field can't be empty");
@@ -30,14 +32,11 @@ class Login extends Component {
       let data = await this.checkUserExist();
       if (data) this.props.history.push("/");
     }
-    // let response = await api.post("/users", this.state);
-    // localStorage.setItem("user",JSON.stringify(response.data))
   };
 
   render() {
-    // this.checkUserExist()
     return (
-      <form onSubmit={this.addUser} className="container">
+      <form onSubmit={this.userLogin} className="container">
         <div className="mb-3">
           <label className="form-label">User Name</label>
           <input
