@@ -4,7 +4,7 @@ export default class AddBlog extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    //   userid: "",
+      user_id: "",
       title: "",
       description: "",
     };
@@ -18,8 +18,13 @@ export default class AddBlog extends Component {
 
   addBlog = async (e) => {
     e.preventDefault();
-    await this.props.addBlog(this.state);
-    this.props.history.push("/");
+    if (localStorage.getItem("user")) {
+      const user_id = JSON.parse(localStorage.getItem("user")).id;
+      await this.props.addBlog({ ...this.state, user_id: user_id });
+      this.props.history.push("/");
+    } else {
+      alert("Add post you need to login");
+    }
   };
 
   render() {
