@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import api from '../api/Blog'
+import api from "../api/Blog";
 
 class Login extends Component {
   state = { user: "", password: "" };
@@ -10,14 +10,32 @@ class Login extends Component {
     });
   };
 
+  checkUserExist = async () => {
+    let flag = false;
+    const response = await api.get("/users");
+    for (let i of response.data) {
+      if (i.user === this.state.user && i.password === this.state.password) {
+        flag = true;
+        return flag;
+      }
+    }
+    alert("check your user and password");
+  };
+
   addUser = async (e) => {
     e.preventDefault();
-    let response = await api.post("/users", this.state); 
-    localStorage.setItem("user",JSON.stringify(response.data))
-    this.props.history.push('/')
+    if (!this.state.user || !this.state.password) {
+      alert("field can't be empty");
+    } else {
+      let data = await this.checkUserExist();
+      if (data) this.props.history.push("/");
+    }
+    // let response = await api.post("/users", this.state);
+    // localStorage.setItem("user",JSON.stringify(response.data))
   };
 
   render() {
+    // this.checkUserExist()
     return (
       <form onSubmit={this.addUser} className="container">
         <div className="mb-3">

@@ -26,6 +26,11 @@ export default class Header extends Component {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="/addblog">
+                  Add Blog
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link
                   className="nav-link active"
                   aria-current="page"
