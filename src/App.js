@@ -1,13 +1,15 @@
 import React from "react";
 import api from "./api/Blog";
 import "./App.css";
-import Home from "./components/Home";
+import Blog from "./components/Blog";
 import Header from "./components/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
 import BlogDetails from "./components/BlogDetail";
 import EditBlog from "./components/EditBlog";
 import AddBlog from "./components/AddBlog";
+import UserBlog from "./components/UserBlog";
+
 
 class App extends React.Component {
   state = { blogs: [] };
@@ -48,7 +50,7 @@ class App extends React.Component {
           <Route render={(props) => <Header {...props} />} />
           <Switch>
             <Route exact path="/">
-              <Home blogs={this.state.blogs} />
+              <Blog blogs={this.state.blogs} />
             </Route>
             <Route
               exact
@@ -73,6 +75,11 @@ class App extends React.Component {
               exact
               path="/addblog"
               render={(props) => <AddBlog {...props} addBlog={this.addBlog} />}
+            />
+            <Route
+              exact
+              path="/userblog"
+              render={(props) => <UserBlog {...props} />}
             />
           </Switch>
         </Router>

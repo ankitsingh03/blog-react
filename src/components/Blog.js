@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {Link} from 'react-router-dom'
 
-class AllBlog extends Component {
+class Blog extends Component {
   render() {
     const blogs = this.props.blogs.map((blog) => {
       return (
@@ -17,4 +17,4 @@ class AllBlog extends Component {
   }
 }
 
-export default AllBlog;
+export default Blog;

@@ -16,7 +16,7 @@ class Login extends Component {
     const response = await api.get("/users");
     for (let i of response.data) {
       if (i.user === this.state.user && i.password === this.state.password) {
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem("user", JSON.stringify(i));
         flag = true;
         return flag;
       }

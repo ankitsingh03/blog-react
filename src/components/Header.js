@@ -25,11 +25,30 @@ export default class Header extends Component {
                   Home
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/addblog">
-                  Add Blog
-                </Link>
-              </li>
+              {localStorage.getItem("user") && (
+                <li className="nav-item">
+                  <Link
+                    className="nav-link active"
+                    aria-current="page"
+                    to="/addblog"
+                  >
+                    Add Blog
+                  </Link>
+                </li>
+              )}
+
+              {localStorage.getItem("user") && (
+                <li className="nav-item">
+                  <Link
+                    className="nav-link active"
+                    aria-current="page"
+                    to="/userblog"
+                  >
+                    You Blog
+                  </Link>
+                </li>
+              )}
+
               <li className="nav-item">
                 <Link
                   className="nav-link active"

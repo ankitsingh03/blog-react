@@ -28,29 +28,33 @@ export default class AddBlog extends Component {
   };
 
   render() {
-    return (
-      <form className="container" onSubmit={this.addBlog}>
-        <label className="form-lable">Title</label>
-        <input
-          type="text"
-          class="form-control mb-3"
-          name="title"
-          value={this.state.title}
-          onChange={this.onChangeHandler}
-        ></input>
+    if (localStorage.getItem("user")) {
+      return (
+        <form className="container" onSubmit={this.addBlog}>
+          <label className="form-lable">Title</label>
+          <input
+            type="text"
+            class="form-control mb-3"
+            name="title"
+            value={this.state.title}
+            onChange={this.onChangeHandler}
+          ></input>
 
-        <label className="form-lable">description</label>
-        <input
-          class="form-control mb-3"
-          name="description"
-          value={this.state.description}
-          onChange={this.onChangeHandler}
-        ></input>
-        <br />
-        <button type="submit" class="btn btn-primary">
-          Add
-        </button>
-      </form>
-    );
+          <label className="form-lable">description</label>
+          <input
+            class="form-control mb-3"
+            name="description"
+            value={this.state.description}
+            onChange={this.onChangeHandler}
+          ></input>
+          <br />
+          <button type="submit" class="btn btn-primary">
+            Add
+          </button>
+        </form>
+      );
+    } else {
+      return <h3>"please login first"</h3>;
+    }
   }
 }
