@@ -1,6 +1,5 @@
 import React from "react";
 import api from "./api/Blog";
-import "./App.css";
 import Blog from "./components/Blog";
 import Header from "./components/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -9,7 +8,6 @@ import BlogDetails from "./components/BlogDetail";
 import EditBlog from "./components/EditBlog";
 import AddBlog from "./components/AddBlog";
 import UserBlog from "./components/UserBlog";
-
 
 class App extends React.Component {
   state = { blogs: [] };
@@ -38,7 +36,8 @@ class App extends React.Component {
   };
 
   deleteBlog = async (id) => {
-    const response = await api.delete(`/blogs/${id}`);
+    // const response = await api.delete(`/blogs/${id}`);
+    await api.delete(`/blogs/${id}`);
     const blogs = this.state.blogs.filter((blog) => blog.id !== id);
     this.setState({ blogs });
   };

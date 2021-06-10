@@ -1,6 +1,25 @@
 import React, { Component } from "react";
 import api from "../api/Blog";
 import { Link } from "react-router-dom";
+// Material-ui
+import { Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+// import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+});
 
 export default class BlogDetail extends Component {
   state = { id: "", title: "", description: "", user_id: "" };
@@ -21,8 +40,10 @@ export default class BlogDetail extends Component {
   }
 
   deleteBlog = async (id) => {
-    await this.props.deleteBlog(id);
-    this.props.history.push("/");
+    if (window.confirm("Do you really want to delete")) {
+      await this.props.deleteBlog(id);
+      this.props.history.push("/");
+    }
   };
 
   render() {
@@ -38,18 +59,40 @@ export default class BlogDetail extends Component {
           <Link
             to={{ pathname: `/blogs/${this.state.id}/edit`, state: this.state }}
           >
-            <button>Edit</button>
+            <Button variant="contained" color="primary" disableElevation>
+              Edit
+            </Button>
           </Link>
-          <button onClick={() => this.deleteBlog(this.state.id)}>Delete</button>
+          <Button
+            onClick={() => this.deleteBlog(this.state.id)}
+            className="m-2"
+            variant="contained"
+            color="secondary"
+          >
+            Delete
+          </Button>
         </div>
       );
     }
     return (
-      <div className="container">
-        <h3>{this.state.title}</h3>
-        <p>{this.state.description}</p>
-        {button}
-      </div>
+      <Card className={`${useStyles.root} container my-4`}>
+        <CardActionArea>
+          <CardMedia
+            className={useStyles.media}
+            image="/static/images/cards/contemplative-reptile.jpg"
+            title="Contemplative Reptile"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              {this.state.title}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {this.state.description}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>{button}</CardActions>
+      </Card>
     );
   }
 }

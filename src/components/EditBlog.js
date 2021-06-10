@@ -3,11 +3,12 @@ import React, { Component } from "react";
 export default class EditBlog extends Component {
   constructor(props) {
     super(props);
-    const { id, title, description } = this.props.history.location.state;
+    const { id, title, description, user_id } = this.props.history.location.state;
     this.state = {
       id,
       title,
       description,
+      user_id
     };
   }
 
@@ -25,25 +26,27 @@ export default class EditBlog extends Component {
 
   render() {
     return (
-      <form className="container" onSubmit={this.editBlog}>
-        <label className="form-lable">Title</label>
+      <form className="ui form container" onSubmit={this.editBlog}>
+        <div className="field">
+        <label>Title</label>
         <input
           type="text"
-          class="form-control mb-3"
           name="title"
           value={this.state.title}
           onChange={this.onChangeHandler}
         ></input>
-
-        <label className="form-lable">description</label>
-        <input
-          class="form-control mb-3"
+        </div>
+        <div className='field'>
+        <label>description</label>
+        <textarea
           name="description"
           value={this.state.description}
           onChange={this.onChangeHandler}
-        ></input>
+        ></textarea>
+
+        </div>
         <br />
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className='ui button'>
           Add
         </button>
       </form>

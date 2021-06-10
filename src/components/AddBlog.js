@@ -8,20 +8,30 @@ export default class AddBlog extends Component {
       title: "",
       description: "",
     };
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.addBlog = this.addBlog.bind(this)
   }
 
-  onChangeHandler = (event) => {
+  onChangeHandler(event) {
     this.setState({
       [event.target.name]: event.target.value,
     });
+  }
+
+  formValidation(){
+    return this.state.title && this.state.description
+      ? true
+      : alert("can't be empty");
   };
 
-  addBlog = async (e) => {
+  async addBlog(e){
     e.preventDefault();
     if (localStorage.getItem("user")) {
-      const user_id = JSON.parse(localStorage.getItem("user")).id;
-      await this.props.addBlog({ ...this.state, user_id: user_id });
-      this.props.history.push("/");
+      if (this.formValidation()) {
+        const user_id = JSON.parse(localStorage.getItem("user")).id;
+        await this.props.addBlog({ ...this.state, user_id: user_id });
+        this.props.history.push("/");
+      }
     } else {
       alert("Add post you need to login");
     }
@@ -30,25 +40,26 @@ export default class AddBlog extends Component {
   render() {
     if (localStorage.getItem("user")) {
       return (
-        <form className="container" onSubmit={this.addBlog}>
-          <label className="form-lable">Title</label>
-          <input
-            type="text"
-            class="form-control mb-3"
-            name="title"
-            value={this.state.title}
-            onChange={this.onChangeHandler}
-          ></input>
-
-          <label className="form-lable">description</label>
-          <input
-            class="form-control mb-3"
-            name="description"
-            value={this.state.description}
-            onChange={this.onChangeHandler}
-          ></input>
+        <form className="ui form container" onSubmit={this.addBlog}>
+          <div className="field">
+            <label>Title</label>
+            <input
+              type="text"
+              name="title"
+              value={this.state.title}
+              onChange={this.onChangeHandler}
+            ></input>
+          </div>
+          <div className="field">
+            <label>description</label>
+            <textarea
+              name="description"
+              value={this.state.description}
+              onChange={this.onChangeHandler}
+            ></textarea>
+          </div>
           <br />
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" className="ui button">
             Add
           </button>
         </form>
